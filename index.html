@@ -36,52 +36,40 @@
         var addMailId = document.getElementById('messages').getElementsByTagName('tbody')[0];
         var newRow = addMailId.insertRow(addMailId.rows.length);
         var newCell;
-        var newText;
+        var newText; 
         var newDiv;
         for(var i = 0; i < geemails.length; i++) {
-        		newCell = newRow.insertCell(0);
-        		newText = document.createTextNode(geemails[i].date);
-        		newCell.appendChild(newText);
-
-        		newCell = newRow.insertCell(1);
-        		newText = document.createTextNode(geemails[i].sender);
-        		newCell.appendChild(newText);
-
-        		newCell = newRow.insertCell(2);
-        		newText = document.createTextNode(geemails[i].subject);
-        		newCell.appendChild(newText);
-
-        		newCell = newRow.insertCell(3);
-        		newText = document.createElement('input');
-        		newText.type = "checkbox";
-                newText.id = "click";
-        		newCell.appendChild(newText);
-
-        		newRow = addMailId.insertRow(addMailId.rows.length);
-
-        		newCell = newRow.insertCell(0);
-        		newCell.colSpan = 4;
-                newDiv = document.createElement("div");
-                newDiv.className = "msg";
-        		newText = document.createTextNode(geemails[i].body);
-                newDiv.appendChild(newText);
-        		newCell.appendChild(newDiv);
-
-        		newRow = addMailId.insertRow(addMailId.rows.length);
+            addMail(geemails[i]);
         }
 
-        $('input[type = checkbox]').click(function () {
-            if($(this).is(':checked')) {
-                $('.msg').show();
-            } else {
-                $('.msg').hide();
-            }
-        });
+        function addMail(email) {
+                    newCell = newRow.insertCell(0);
+                    newText = document.createTextNode(email.date);
+                    newCell.appendChild(newText);
+
+                    newCell = newRow.insertCell(1);
+                    newText = document.createTextNode(email.sender);
+                    newCell.appendChild(newText);
+
+                    newCell = newRow.insertCell(2);
+                    newText = document.createTextNode(email.subject);
+                    newCell.appendChild(newText);
+
+                    newCell = newRow.insertCell(3);
+                    newText = document.createElement('input');
+                    newText.type = "checkbox";
+                    newText.checked = false;
+                    newText.onclick = function() {
+                        alert(email.body);
+                        newText.checked = true;
+                    }
+                    newCell.appendChild(newText);
+
+                    newRow = addMailId.insertRow(addMailId.rows.length);
+        }
 
         //INBOX BUTTON
-        $(".talk-bubble").click(function() {
-            alert("hi");
-        });
+        
 
       };
     </script>
