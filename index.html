@@ -2,17 +2,121 @@
 	<head>
 		<script src="js/mail-generator.js"></script>
 		<link href="css/style.css" rel="stylesheet" media="screen">
-    <script>
+    <script type="text/JavaScript">
       window.onload = function(){
         // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
         // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-        
+
+        //INBOX
+        document.getElementById('inbox').innerHTML = "Inbox: " + geemails.length;
+
+        //CURRENT DATE+TIME
+        var tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+        function GetClock(){
+        var d=new Date();
+        var nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+        if(nyear<1000) nyear+=1900;
+
+        var nhour=d.getHours(),nmin=d.getMinutes(),ap;
+        if(nhour==0){ap=" AM";nhour=12;}
+        else if(nhour<12){ap=" AM";}
+        else if(nhour==12){ap=" PM";}
+        else if(nhour>12){ap=" PM";nhour-=12;}
+
+        if(nmin<=9) nmin="0"+nmin;
+
+        document.getElementById('clockbox').innerHTML=""+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+ap+"";
+        }
+
+        GetClock();
+        setInterval(GetClock,1000);
+
+        //MESSAGES
+        var addMailId = document.getElementById('messages').getElementsByTagName('tbody')[0];
+        var newRow = addMailId.insertRow(addMailId.rows.length);
+        var newCell;
+        var newText;
+        var newDiv;
+        for(var i = 0; i < geemails.length; i++) {
+        		newCell = newRow.insertCell(0);
+        		newText = document.createTextNode(geemails[i].date);
+        		newCell.appendChild(newText);
+
+        		newCell = newRow.insertCell(1);
+        		newText = document.createTextNode(geemails[i].sender);
+        		newCell.appendChild(newText);
+
+        		newCell = newRow.insertCell(2);
+        		newText = document.createTextNode(geemails[i].subject);
+        		newCell.appendChild(newText);
+
+        		newCell = newRow.insertCell(3);
+        		newText = document.createElement('input');
+        		newText.type = "checkbox";
+                newText.id = "click";
+        		newCell.appendChild(newText);
+
+        		newRow = addMailId.insertRow(addMailId.rows.length);
+
+        		newCell = newRow.insertCell(0);
+        		newCell.colSpan = 4;
+                newDiv = document.createElement("div");
+                newDiv.className = "msg";
+        		newText = document.createTextNode(geemails[i].body);
+                newDiv.appendChild(newText);
+        		newCell.appendChild(newDiv);
+
+        		newRow = addMailId.insertRow(addMailId.rows.length);
+        }
+
+        $('input[type = checkbox]').click(function () {
+            if($(this).is(':checked')) {
+                $('.msg').show();
+            } else {
+                $('.msg').hide();
+            }
+        });
+
+        //INBOX BUTTON
+        $(".talk-bubble").click(function() {
+            alert("hi");
+        });
+
       };
     </script>
+
+    <title>GeeMail</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 	</head>
 	<body>
 		<div class="container" id="main">
-			Build Me!
+			<div class="talk-bubble tri-right round btm-left">
+			  <div class="talktext">
+			    <p id="inbox"></p>
+			  </div>
+			</div>
+			<h1>GEEMAIL,</h1><br>
+			<span id="clockbox"></span>
+			<br>
+			<br>
+			<div align="center">
+			<table id="messages">
+			  <thead>
+			    <tr>
+			      <th>Date</th>
+			      <th>Sender</th>
+			      <th>Subject</th>
+			      <th>View</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  </tbody>
+			</table>
+			</div>
 		</div>
 	</body>
 </html>
