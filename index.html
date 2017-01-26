@@ -55,21 +55,27 @@
                     newText = document.createTextNode(email.subject);
                     newCell.appendChild(newText);
 
-                    newCell = newRow.insertCell(3);
-                    newText = document.createElement('input');
-                    newText.type = "checkbox";
-                    newText.checked = false;
-                    newText.onclick = function() {
+                    newRow.onclick = function () {
                         alert(email.body);
-                        newText.checked = true;
                     }
-                    newCell.appendChild(newText);
 
                     newRow = addMailId.insertRow(addMailId.rows.length);
         }
 
         //INBOX BUTTON
-        
+        var emailNum = geemails.length;
+        setInterval(function () {
+            
+            var inboxButton = document.getElementById("inboxbtn");
+            inboxButton.onclick = function() {
+                alert("You got mail!");
+
+                addMail(getNewMessage());
+                emailNum++;
+
+                document.getElementById('inbox').innerHTML = "Inbox: " + emailNum;
+            }
+        }, 1000);
 
       };
     </script>
@@ -82,7 +88,7 @@
 	</head>
 	<body>
 		<div class="container" id="main">
-			<div class="talk-bubble tri-right round btm-left">
+			<div class="talk-bubble tri-right round btm-left" id="inboxbtn">
 			  <div class="talktext">
 			    <p id="inbox"></p>
 			  </div>
@@ -98,7 +104,6 @@
 			      <th>Date</th>
 			      <th>Sender</th>
 			      <th>Subject</th>
-			      <th>View</th>
 			    </tr>
 			  </thead>
 			  <tbody>
