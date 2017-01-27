@@ -38,8 +38,9 @@
         var newCell;
         var newText; 
         var newDiv;
-        for(var i = 0; i < geemails.length; i++) {
-            addMail(geemails[i]);
+        var currMsg = geemails;
+        for(var i = 0; i < currMsg.length; i++) {
+            addMail(currMsg[i]);
         }
 
         function addMail(email) {
@@ -62,20 +63,55 @@
                     newRow = addMailId.insertRow(addMailId.rows.length);
         }
 
+        function clearTable() {
+            while(addMailId.rows.length > 1) {
+                addMailId.deleteRow(0);
+            }
+        }
+
         //INBOX BUTTON
-        var emailNum = geemails.length;
+        var emailNum = currMsg.length;
         setInterval(function () {
-            
             var inboxButton = document.getElementById("inboxbtn");
             inboxButton.onclick = function() {
                 alert("You got mail!");
 
-                addMail(getNewMessage());
+                currMsg[currMsg.length] = getNewMessage();
+                addMail(currMsg[currMsg.length-1]);
                 emailNum++;
 
                 document.getElementById('inbox').innerHTML = "Inbox: " + emailNum;
             }
         }, 1000);
+
+        //DATE SORT
+        var dateButton = document.getElementById("datebtn");
+        dateButton.onclick = function() {
+        }
+
+        //SENDER SORT
+        var senderButton = document.getElementById("senderbtn");
+        senderButton.onclick = function() {
+            var sortedSender = currMsg;
+            sortedSender.sort(function(a, b) {
+                return a.Sender.localeCompare(b.Sender);
+            });
+            clearTable();
+
+            for(var i = 0; i < sortedSender.length; i++) {
+                addMail(sortedSender[i]);
+            }
+        }
+
+        //SUBJECT SORT
+        var subjectButton = document.getElementById("subjectbtn");
+        subjectButton.onclick = function() {
+        }
+
+        var helpButton = document.getElementById("help");
+        helpButton.onclick = function() {
+            alert("- To view an email simply click on the specified e-mail\n- To view/update e-mails click the red inbox button\n");
+        }
 
       };
     </script>
@@ -101,9 +137,9 @@
 			<table id="messages">
 			  <thead>
 			    <tr>
-			      <th>Date</th>
-			      <th>Sender</th>
-			      <th>Subject</th>
+			      <th id="datebtn" bgcolor="#f5f5f5">Date</th>
+			      <th id="senderbtn" bgcolor="#f5f5f5">Sender</th>
+			      <th id="subjectbtn" bgcolor="#f5f5f5">Subject</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -111,5 +147,6 @@
 			</table>
 			</div>
 		</div>
+        <footer><div id="help">Need help?</div></footer>
 	</body>
 </html>
