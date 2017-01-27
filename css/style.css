@@ -23,8 +23,13 @@ td {
 }
 
 tr:hover {
-	background-color: #f5f5f5
+	background-color: #f5f5f5;
 }
+
+#datebtn:hover, #senderbtn:hover, #subjectbtn:hover {
+	background-color: #dcdcdc;
+}
+
 
 footer {
 	text-align: center;
@@ -47,7 +52,7 @@ footer:hover {
 	text-align: center;
 }
 
-/**/
+/*Chatbubble/Inbox button*/
 .tri-right.border.btm-left:before {
 	content: ' ';
 	position: absolute;
@@ -101,8 +106,4 @@ footer:hover {
 
 }
 /**/
-
-[data-toggle="toggle"] {
-	display: none;
-}
 
